@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Horoscope Dashboard</title>
-  <script src="data.js"></script>
   <style>
     body {
       margin: 0;
@@ -159,7 +158,7 @@
       <input id="monthInput" type="number" placeholder="Month" min="1" max="12" />
       <input id="dayInput" type="number" placeholder="Day" min="1" max="31" />
       <input id="hourInput" type="number" placeholder="Hour" min="0" max="23" />
-      <button class="pink-btn" onclick="generateBigThree()">Generate Chart</button>
+      <button id="bigThreeBtn" class="pink-btn">Generate Chart</button>
     </div>
     <div id="bigThreeBox" class="box">Enter birth month, day, and hour to generate your Big Three.</div>
 
@@ -167,160 +166,11 @@
     <div class="input-row">
       <select id="sign1Select"></select>
       <select id="sign2Select"></select>
-      <button class="pink-btn" onclick="compareSigns()">Compare</button>
+      <button id="compatBtn" class="pink-btn">Compare</button>
     </div>
     <div id="compatBox" class="box">Choose two signs to compare.</div>
   </div>
 
-  <script>
-    const favorites = new Set();
-
-    function getBigThree(month, day, hour) {
-      let sun = "Unknown";
-
-      for (const [sign, start, end] of zodiacSigns) {
-        const [sm, sd] = start;
-        const [em, ed] = end;
-
-        if (sm === em) {
-          if (month === sm && day >= sd && day <= ed) {
-            sun = sign;
-          }
-        } else {
-          if ((month === sm && day >= sd) || (month === em && day <= ed)) {
-            sun = sign;
-          }
-        }
-      }
-
-      const moon = moonSigns[(month + day) % 12];
-      const rising = risingSigns[(Math.floor(hour / 2) + month + day) % 12];
-
-      return { sun, moon, rising };
-    }
-
-    function showHoroscope(sign) {
-      const data = horoscopeData[sign];
-      const text = `${sign}
-
-Reading: ${data.reading}
-
-Mood: ${data.mood}
-Lucky Color: ${data.color}
-Lucky Number: ${data.number}
-Moon Phase: ${data.moon}`;
-
-      document.getElementById("horoscopeBox").textContent = text;
-    }
-
-    function toggleFavorite(sign) {
-      if (favorites.has(sign)) {
-        favorites.delete(sign);
-      } else {
-        favorites.add(sign);
-      }
-      updateGrid();
-    }
-
-    function updateGrid() {
-      const query = document.getElementById("searchInput").value.toLowerCase();
-      const grid = document.getElementById("zodiacGrid");
-      grid.innerHTML = "";
-
-      zodiacSigns.forEach(([sign]) => {
-        if (sign.toLowerCase().includes(query)) {
-          const card = document.createElement("div");
-          card.className = "card";
-
-          const btn = document.createElement("button");
-          btn.textContent = sign;
-          btn.onclick = () => showHoroscope(sign);
-
-          const heart = document.createElement("div");
-          heart.className = favorites.has(sign) ? "heart favorited" : "heart";
-          heart.textContent = favorites.has(sign) ? "♥" : "♡";
-          heart.onclick = () => toggleFavorite(sign);
-
-          card.appendChild(btn);
-          card.appendChild(heart);
-          grid.appendChild(card);
-        }
-      });
-    }
-
-    function generateBigThree() {
-      const month = parseInt(document.getElementById("monthInput").value);
-      const day = parseInt(document.getElementById("dayInput").value);
-      const hour = parseInt(document.getElementById("hourInput").value);
-      const box = document.getElementById("bigThreeBox");
-
-      if (isNaN(month) || isNaN(day) || isNaN(hour)) {
-        box.textContent = "Please enter valid numbers.";
-        return;
-      }
-
-      const { sun, moon, rising } = getBigThree(month, day, hour);
-
-      box.textContent = `Big Three Results
-
-Sun Sign: ${sun}
-Moon Sign: ${moon}
-Rising Sign: ${rising}
-
-Change the birth hour and generate again to see the rising sign update.`;
-    }
-
-    function compareSigns() {
-      const s1 = document.getElementById("sign1Select").value;
-      const s2 = document.getElementById("sign2Select").value;
-      const box = document.getElementById("compatBox");
-
-      const key = `${s1}-${s2}`;
-      const reverse = `${s2}-${s1}`;
-
-      let data;
-      if (compatibilityData[key]) {
-        data = compatibilityData[key];
-      } else if (compatibilityData[reverse]) {
-        data = compatibilityData[reverse];
-      } else {
-        data = compatibilityData.default;
-      }
-
-      box.textContent = `${s1} + ${s2}
-
-Love: ${data.love}%
-${data.love_text}
-
-Friendship: ${data.friendship}%
-${data.friendship_text}
-
-Communication: ${data.communication}%
-${data.communication_text}`;
-    }
-
-    function loadDropdowns() {
-      const sign1 = document.getElementById("sign1Select");
-      const sign2 = document.getElementById("sign2Select");
-
-      zodiacSigns.forEach(([sign]) => {
-        const opt1 = document.createElement("option");
-        opt1.value = sign;
-        opt1.textContent = sign;
-
-        const opt2 = document.createElement("option");
-        opt2.value = sign;
-        opt2.textContent = sign;
-
-        sign1.appendChild(opt1);
-        sign2.appendChild(opt2);
-      });
-    }
-
-    document.getElementById("searchInput").addEventListener("input", updateGrid);
-
-    loadDropdowns();
-    updateGrid();
-  </script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>

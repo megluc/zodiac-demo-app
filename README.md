@@ -1,74 +1,59 @@
 # Horoscope Dashboard
 
-## Overview
-This project is a simple astrology web dashboard that allows users to explore zodiac information in an interactive way. The dashboard includes daily horoscope readings, a Big Three generator (sun, moon, and rising signs), a compatibility checker between zodiac signs, a favorites toggle for zodiac cards, and a search feature that filters zodiac signs in real time.
-
-The goal of the project is to provide a beginner friendly interface where users can explore astrology concepts without needing prior knowledge of complex birth charts or astrological terminology.
-
-## Features
-• Zodiac grid displaying all 12 signs  
-• Click a zodiac sign to view its daily horoscope reading  
-• Favorites toggle (heart icon) to mark preferred zodiac signs  
-• Search bar to filter zodiac signs in real time  
-• Big Three generator that calculates sun, moon, and rising signs based on birth data  
-• Compatibility checker that compares two zodiac signs  
-• Responsive layout that works on both desktop and mobile browsers  
-
-## Files Included
-index.html  
-Main interface of the Horoscope Dashboard. Contains the layout, styling, and JavaScript logic for the app.
-
-data.js  
-Contains the zodiac data including horoscope readings, compatibility data, moon signs, and rising sign arrays.
-
-README.md  
-This file. Explains how the project works and how to run it.
+A client-side horoscope dashboard built with vanilla JavaScript ES modules. Features a zodiac sign grid, daily horoscope display, Big Three generator, compatibility checker, and favorite toggling.
 
 ## How to Run
-1. Download all project files.
-2. Place the following files in the same folder:
-   - index.html
-   - data.js
-   - README.md
-3. Open `index.html` in any modern web browser (Chrome, Edge, Safari, or Firefox).
-4. The Horoscope Dashboard will load and can be used immediately.
 
-No installation or server setup is required because the project runs completely in the browser.
+```
+python3 -m http.server 4040
+```
 
-## How to Use the Dashboard
+Open: http://localhost:4040
 
-### Viewing a Horoscope
-Click any zodiac sign card in the grid. The horoscope reading and related information will appear below the grid.
 
-### Favoriting a Zodiac Sign
-Click the heart icon on a zodiac card to add it to favorites. Clicking the heart again removes the favorite.
+## Module Map
 
-### Searching Zodiac Signs
-Use the search bar at the top of the page. Typing part of a zodiac name (for example "Cap") will filter the grid to matching signs.
+| File | Responsibility |
+|---|---|
+| `data.js` | Exported data constants (zodiac signs, horoscope data, compatibility data, moon/rising sign arrays) |
+| `dom.js` | Centralized element references |
+| `state.js` | Single state object and selector functions |
+| `api.js` | Async data loading with resilience patterns |
+| `render.js` | Orchestrates all DOM updates using selectors |
+| `main.js` | Bootstraps app, wires event listeners |
+| `components/ZodiacGrid.js` | Self-contained zodiac grid component |
 
-### Generating the Big Three
-Enter:
-• birth month  
-• birth day  
-• birth hour  
+## Component Contracts
 
-Click **Generate Chart** to calculate the sun, moon, and rising signs.
+```js
+// Component: ZodiacGrid
+// Input: { signs, favorites, onSelectSign, onToggleFavorite }
+// Output: DOM nodes mounted inside `container`
+// Events: onSelectSign(sign) — called when user clicks a sign card
+//         onToggleFavorite(sign) — called when user clicks the heart
+// Dependencies: none
+```
 
-Changing the birth hour will change the rising sign since rising signs are time dependent.
+## Resilience Patterns
 
-### Checking Compatibility
-Select two zodiac signs from the dropdown menus and click **Compare**. The dashboard will display compatibility scores for:
+Implemented in `api.js`:
 
-• Love  
-• Friendship  
-• Communication  
+1. **AbortController timeout** — cancels fetch after 8 seconds
+2. **Stale-request cancellation** — aborts previous in-flight request when a new load starts
+3. **Structured error messages** — distinct messages for timeout, stale, network, parse, and validation errors
+4. **Data validation** — validates all horoscope entries have required fields before updating state
 
-## Technologies Used
-HTML  
-CSS  
-JavaScript  
+## Current Feature Status
 
-The project is designed as a lightweight client side web application without requiring any frameworks or external libraries.
+**Working:**
+- Zodiac sign grid with search filtering
+- Daily horoscope display
+- Favorite toggling (heart icon on each card)
+- Big Three generator (sun sign is accurate, moon and rising use a simplified formula)
+- Compatibility checker
+- All four UI states (loading, error, empty, success)
 
-## Author
-Created as a student project for a web development / software design course.
+**Needs improvement:**
+- No filter-by-favorites button yet — the toggle works but there is no way to view only favorited signs
+- Compatibility data only has a default entry — all sign combinations return the same scores, needs real pairings added to `compatibilityData` in `data.js`
+- Big Three moon and rising calculations are simplified can add labels on input spaces so users know what form to enter as well as errors so you cant enter anything other than proper digit format 
