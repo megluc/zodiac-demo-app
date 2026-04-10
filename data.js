@@ -1,44 +1,50 @@
-
-const zodiacSigns = [
-  ["Aries", [3, 21], [4, 19]],
-  ["Taurus", [4, 20], [5, 20]],
-  ["Gemini", [5, 21], [6, 20]],
-  ["Cancer", [6, 21], [7, 22]],
-  ["Leo", [7, 23], [8, 22]],
-  ["Virgo", [8, 23], [9, 22]],
-  ["Libra", [9, 23], [10, 22]],
-  ["Scorpio", [10, 23], [11, 21]],
+export const zodiacSigns = [
+  ["Aries",       [3, 21], [4, 19]],
+  ["Taurus",      [4, 20], [5, 20]],
+  ["Gemini",      [5, 21], [6, 20]],
+  ["Cancer",      [6, 21], [7, 22]],
+  ["Leo",         [7, 23], [8, 22]],
+  ["Virgo",       [8, 23], [9, 22]],
+  ["Libra",       [9, 23], [10, 22]],
+  ["Scorpio",     [10, 23], [11, 21]],
   ["Sagittarius", [11, 22], [12, 21]],
-  ["Capricorn", [12, 22], [1, 19]],
-  ["Aquarius", [1, 20], [2, 18]],
-  ["Pisces", [2, 19], [3, 20]]
+  ["Capricorn",   [12, 22], [1, 19]],
+  ["Aquarius",    [1, 20], [2, 18]],
+  ["Pisces",      [2, 19], [3, 20]],
 ];
 
-const horoscopeData = {
-  Aries:{reading:"Today is a great day to start something new.",mood:"Motivated",color:"Red",number:9,moon:"Waxing Crescent"},
-  Taurus:{reading:"Slow down and focus on comfort.",mood:"Calm",color:"Green",number:6,moon:"First Quarter"},
-  Gemini:{reading:"Conversations may lead to opportunities.",mood:"Social",color:"Yellow",number:5,moon:"Waxing Gibbous"},
-  Cancer:{reading:"Focus on emotional balance today.",mood:"Reflective",color:"Silver",number:2,moon:"Full Moon"},
-  Leo:{reading:"Lead with confidence and creativity.",mood:"Bold",color:"Gold",number:1,moon:"Waning Gibbous"},
-  Virgo:{reading:"Good day for organization.",mood:"Focused",color:"Navy",number:4,moon:"Last Quarter"},
-  Libra:{reading:"Balance work and personal time.",mood:"Balanced",color:"Pink",number:7,moon:"Waning Crescent"},
-  Scorpio:{reading:"Deep conversations reveal truths.",mood:"Intense",color:"Black",number:8,moon:"New Moon"},
-  Sagittarius:{reading:"Adventure may appear today.",mood:"Optimistic",color:"Purple",number:3,moon:"Waxing Crescent"},
-  Capricorn:{reading:"Stay focused on long term goals.",mood:"Driven",color:"Brown",number:10,moon:"First Quarter"},
-  Aquarius:{reading:"Your ideas inspire people.",mood:"Creative",color:"Blue",number:11,moon:"Waxing Gibbous"},
-  Pisces:{reading:"Trust your intuition.",mood:"Dreamy",color:"Seafoam",number:12,moon:"Full Moon"}
+export const horoscopeData = {
+  Aries:       { reading: "Today is a great day to start something new.", mood: "Motivated",  color: "Red",     number: 9,  moon: "Waxing Crescent" },
+  Taurus:      { reading: "Slow down and focus on comfort.",               mood: "Calm",       color: "Green",   number: 6,  moon: "First Quarter"   },
+  Gemini:      { reading: "Conversations may lead to opportunities.",      mood: "Social",     color: "Yellow",  number: 5,  moon: "Waxing Gibbous"  },
+  Cancer:      { reading: "Focus on emotional balance today.",             mood: "Reflective", color: "Silver",  number: 2,  moon: "Full Moon"        },
+  Leo:         { reading: "Lead with confidence and creativity.",          mood: "Bold",       color: "Gold",    number: 1,  moon: "Waning Gibbous"  },
+  Virgo:       { reading: "Good day for organization.",                    mood: "Focused",    color: "Navy",    number: 4,  moon: "Last Quarter"    },
+  Libra:       { reading: "Balance work and personal time.",               mood: "Balanced",   color: "Pink",    number: 7,  moon: "Waning Crescent" },
+  Scorpio:     { reading: "Deep conversations reveal truths.",             mood: "Intense",    color: "Black",   number: 8,  moon: "New Moon"         },
+  Sagittarius: { reading: "Adventure may appear today.",                   mood: "Optimistic", color: "Purple",  number: 3,  moon: "Waxing Crescent" },
+  Capricorn:   { reading: "Stay focused on long term goals.",              mood: "Driven",     color: "Brown",   number: 10, moon: "First Quarter"   },
+  Aquarius:    { reading: "Your ideas inspire people.",                    mood: "Creative",   color: "Blue",    number: 11, moon: "Waxing Gibbous"  },
+  Pisces:      { reading: "Trust your intuition.",                         mood: "Dreamy",     color: "Seafoam", number: 12, moon: "Full Moon"        },
 };
 
-const compatibilityData = {
-  default:{
-    love:75,
-    friendship:77,
-    communication:74,
-    love_text:"These signs have a decent romantic connection.",
-    friendship_text:"Friendship grows through shared experiences.",
-    communication_text:"Their communication style is balanced."
-  }
+export const compatibilityData = {
+  default: {
+    love: 75,
+    friendship: 77,
+    communication: 74,
+    love_text: "These signs have a decent romantic connection.",
+    friendship_text: "Friendship grows through shared experiences.",
+    communication_text: "Their communication style is balanced.",
+  },
 };
 
-const moonSigns = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-const risingSigns = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
+export const moonSigns = [
+  "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+  "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+];
+
+export const risingSigns = [
+  "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
+  "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+];
