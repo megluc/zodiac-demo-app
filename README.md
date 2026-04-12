@@ -56,4 +56,46 @@ Implemented in `api.js`:
 **Needs improvement:**
 - No filter-by-favorites button yet — the toggle works but there is no way to view only favorited signs
 - Compatibility data only has a default entry — all sign combinations return the same scores, needs real pairings added to `compatibilityData` in `data.js`
-- Big Three moon and rising calculations are simplified can add labels on input spaces so users know what form to enter as well as errors so you cant enter anything other than proper digit format 
+- Big Three moon and rising calculations are simplified can add labels on input spaces so users know what form to enter as well as errors so you cant enter anything other than proper digit format
+
+## UI States 
+
+The application implements all four required UI states:
+
+- **Loading**  
+  When `state.loadStatus === "loading"`, the app displays a loading message in the grid area while data is being fetched.
+
+- **Error**  
+  When `state.loadStatus === "error"`, a user-friendly error message is displayed along with a **Retry button** that re-triggers the data load without refreshing the page.
+
+- **Empty**  
+  When no zodiac signs match the search query, a message is displayed:
+  "No signs match your search."
+
+- **Success**  
+  When data loads successfully, the zodiac grid and horoscope data are rendered.
+
+  ## Resilience Patterns 
+
+Implemented in `api.js`:
+
+- **Timeout (AbortController)**  
+  Automatically cancels requests after 8 seconds
+
+- **Stale-request cancellation**  
+  Previous in-flight requests are aborted when a new request starts
+
+- **Structured error messages**  
+  Different messages for:
+  - timeout
+  - stale requests
+  - network errors
+  - parse errors
+  - validation errors
+
+- **Data validation**  
+  Ensures all horoscope entries contain required fields before updating state
+
+  
+
+  
