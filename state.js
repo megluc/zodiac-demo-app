@@ -30,6 +30,8 @@ export const state = {
 
   /** @type {Set<string>} */
   favorites: new Set(),
+
+  showFavorites: false,
 };
 
 // ---------------------------------------------------------------------------
