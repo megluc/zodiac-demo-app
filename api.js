@@ -1,10 +1,3 @@
-import {
-  zodiacSigns,
-  horoscopeData,
-  compatibilityData,
-  moonSigns,
-  risingSigns,
-} from "./data.js";
 import { state } from "./state.js";
 
 // ---------------------------------------------------------------------------
@@ -16,6 +9,7 @@ let currentController = null;
 
 const REQUIRED_HOROSCOPE_FIELDS = ["reading", "mood", "color", "number", "moon"];
 const TIMEOUT_MS = 8000;
+const DATA_URL = "./data.json";
 
 /**
  * Loads application data into `state`.
@@ -25,9 +19,9 @@ const TIMEOUT_MS = 8000;
  *   2. Stale-request cancellation   — aborts the previous in-flight call with
  *                                     reason "stale" before starting a new one.
  *   3. Structured error messages    — distinct messages for timeout, stale,
- *                                     network, parse, and validation failures.
- *   4. Data validation              — every horoscopeData entry must have all
- *                                     five required fields before state is updated.
+ *                                     network, HTTP, parse, and validation failures.
+ *   4. Data validation              — validates both the top-level shape and
+ *                                     each horoscope entry before state updates.
  */
 export async function loadAppData() {
   // --- Pattern 2: cancel any previous in-flight request ---
@@ -45,9 +39,17 @@ export async function loadAppData() {
   state.errorMessage = "";
 
   try {
-    const data = await _fetchLocal(controller.signal);
+    // --- Real fetch from local JSON file ---
+    const response = await fetch(DATA_URL, { signal: controller.signal });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
 
     // --- Pattern 4: validate before touching state ---
+    _validateAppData(data);
     _validateHoroscopeData(data.horoscopeData);
 
     state.zodiacSigns       = data.zodiacSigns;
@@ -74,6 +76,8 @@ export async function loadAppData() {
       state.errorMessage = err.message;
     } else if (err instanceof SyntaxError) {
       state.errorMessage = "Failed to parse data: unexpected format.";
+    } else if (err.message?.startsWith("HTTP")) {
+      state.errorMessage = `Server error: ${err.message}`;
     } else if (err instanceof TypeError) {
       state.errorMessage = "Network error: could not reach the data source.";
     } else {
@@ -92,38 +96,34 @@ export async function loadAppData() {
 // ---------------------------------------------------------------------------
 
 /**
- * Simulates an async data fetch by resolving on the next event-loop tick
- * (a short setTimeout). Honours the AbortSignal so stale/timed-out calls
- * are rejected immediately rather than continuing to occupy resources.
+ * Validates the top-level JSON structure.
+ * Throws a ValidationError if any required top-level field is missing.
  *
- * @param {AbortSignal} signal
- * @returns {Promise<{zodiacSigns, horoscopeData, compatibilityData, moonSigns, risingSigns}>}
+ * @param {object} data
  */
-function _fetchLocal(signal) {
-  return new Promise((resolve, reject) => {
-    if (signal.aborted) {
-      reject(new DOMException("Aborted", "AbortError"));
-      return;
+function _validateAppData(data) {
+  const requiredTopLevelFields = [
+    "zodiacSigns",
+    "horoscopeData",
+    "compatibilityData",
+    "moonSigns",
+    "risingSigns",
+  ];
+
+  for (const field of requiredTopLevelFields) {
+    if (!(field in data)) {
+      const err = new Error(
+        `Validation error: missing top-level field "${field}".`
+      );
+      err.name = "ValidationError";
+      throw err;
     }
-
-    const timerId = setTimeout(() => {
-      if (signal.aborted) {
-        reject(new DOMException("Aborted", "AbortError"));
-      } else {
-        resolve({ zodiacSigns, horoscopeData, compatibilityData, moonSigns, risingSigns });
-      }
-    }, 50);
-
-    // If the signal fires while we are waiting, cancel the timer immediately.
-    signal.addEventListener("abort", () => {
-      clearTimeout(timerId);
-      reject(new DOMException("Aborted", "AbortError"));
-    }, { once: true });
-  });
+  }
 }
 
 /**
  * Throws a ValidationError if any horoscopeData entry is missing a required field.
+ *
  * @param {object} data
  */
 function _validateHoroscopeData(data) {
