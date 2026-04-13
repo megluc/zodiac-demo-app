@@ -38,8 +38,6 @@ dom.searchInput.addEventListener("input", (e) => {
   renderApp();
 });
 
-// bigThreeBtn and compatBtn don't have IDs in the current HTML yet —
-// optional chaining prevents errors until index.html is updated.
 dom.bigThreeBtn?.addEventListener("click", () => {
   const month = parseInt(dom.monthInput.value, 10);
   const day   = parseInt(dom.dayInput.value, 10);

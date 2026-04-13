@@ -34,31 +34,7 @@ Open: http://localhost:4040
 // Dependencies: none
 ```
 
-## Resilience Patterns
-
-Implemented in `api.js`:
-
-1. **AbortController timeout** — cancels fetch after 8 seconds
-2. **Stale-request cancellation** — aborts previous in-flight request when a new load starts
-3. **Structured error messages** — distinct messages for timeout, stale, network, parse, and validation errors
-4. **Data validation** — validates all horoscope entries have required fields before updating state
-
-## Current Feature Status
-
-**Working:**
-- Zodiac sign grid with search filtering
-- Daily horoscope display
-- Favorite toggling (heart icon on each card)
-- Big Three generator (sun sign is accurate, moon and rising use a simplified formula)
-- Compatibility checker
-- All four UI states (loading, error, empty, success)
-
-**Needs improvement:**
-- No filter-by-favorites button yet — the toggle works but there is no way to view only favorited signs
-- Compatibility data only has a default entry — all sign combinations return the same scores, needs real pairings added to `compatibilityData` in `data.js`
-- Big Three moon and rising calculations are simplified can add labels on input spaces so users know what form to enter as well as errors so you cant enter anything other than proper digit format
-
-## UI States 
+## UI States
 
 The application implements all four required UI states:
 
@@ -70,12 +46,12 @@ The application implements all four required UI states:
 
 - **Empty**  
   When no zodiac signs match the search query, a message is displayed:
-  "No signs match your search."
+  `"No signs match your search."`
 
 - **Success**  
   When data loads successfully, the zodiac grid and horoscope data are rendered.
 
-  ## Resilience Patterns 
+## Resilience Patterns
 
 Implemented in `api.js`:
 
@@ -86,15 +62,33 @@ Implemented in `api.js`:
   Previous in-flight requests are aborted when a new request starts
 
 - **Structured error messages**  
-  Different messages for:
+  Different messages are shown for:
   - timeout
   - stale requests
   - network errors
+  - HTTP errors
   - parse errors
   - validation errors
 
 - **Data validation**  
-  Ensures all horoscope entries contain required fields before updating state
+  Ensures both the top-level JSON structure and all horoscope entries contain the required fields
+
+## Current Feature Status
+
+**Working:**
+- Zodiac sign grid with search filtering
+- Daily horoscope display
+- Favorite toggling
+- Big Three generator
+- Compatibility checker
+- All four UI states
+- Real `fetch()` loading from `data.json`
+
+**Needs improvement:**
+- No filter-by-favorites button yet
+- Compatibility data currently only includes a default fallback pairing
+- Big Three moon and rising calculations use a simplified formula
+- More sign-specific compatibility data can be added in the future
 
   
 
