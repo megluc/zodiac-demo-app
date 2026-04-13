@@ -156,17 +156,27 @@
 
     <h2>Big Three Generator</h2>
     <div class="input-row">
+      <label for="monthInput">Month</label>
       <input id="monthInput" type="number" placeholder="Month" min="1" max="12" />
+
+      <label for="dayInput">Day</label>
       <input id="dayInput" type="number" placeholder="Day" min="1" max="31" />
+
+      <label for="hourInput">Hour</label>
       <input id="hourInput" type="number" placeholder="Hour" min="0" max="23" />
+
       <button id="bigThreeBtn" class="pink-btn">Generate Chart</button>
     </div>
     <div id="bigThreeBox" class="box">Enter birth month, day, and hour to generate your Big Three.</div>
 
     <h2>Compatibility Checker</h2>
     <div class="input-row">
+      <label for="sign1Select">First Sign</label>
       <select id="sign1Select"></select>
+
+      <label for="sign2Select">Second Sign</label>
       <select id="sign2Select"></select>
+
       <button id="compatBtn" class="pink-btn">Compare</button>
     </div>
     <div id="compatBox" class="box">Choose two signs to compare.</div>
