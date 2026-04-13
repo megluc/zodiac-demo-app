@@ -17,3 +17,4 @@ export const sign2Select   = document.getElementById("sign2Select");
 
 export const bigThreeBtn   = document.getElementById("bigThreeBtn");
 export const compatBtn     = document.getElementById("compatBtn");
+export const favoritesBtn = document.getElementById("favoritesBtn");
