@@ -30,6 +30,8 @@ export const state = {
 
   /** @type {Set<string>} */
   favorites: new Set(),
+
+  showFavorites: false,
 };
 
 // ---------------------------------------------------------------------------
@@ -38,8 +40,15 @@ export const state = {
 
 /** Signs whose names include the current search query (case-insensitive). */
 export function getFilteredSigns() {
+  if (state.showFavorites) {
+    return getFavoritedSigns();
+  }
+
   const q = state.query.toLowerCase();
-  return state.zodiacSigns.filter(([sign]) => sign.toLowerCase().includes(q));
+
+  return state.zodiacSigns.filter(([sign]) =>
+    sign.toLowerCase().includes(q)
+  );
 }
 
 /** Signs the user has marked as favorites, in zodiac order. */

@@ -26,6 +26,13 @@ async function startLoad() {
 // Event listeners
 // ---------------------------------------------------------------------------
 
+dom.favoritesBtn?.addEventListener("click", () => {
+  state.query = "";
+  state.showFavorites = !state.showFavorites;
+  renderApp();
+});  
+  
+
 dom.searchInput.addEventListener("input", (e) => {
   state.query = e.target.value;
   renderApp();
