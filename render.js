@@ -160,6 +160,16 @@ function _updateHoroscopeBox() {
 function _populateSelects() {
   if (dom.sign1Select.options.length > 0) return;
 
+  const placeholder1 = document.createElement("option");
+  placeholder1.value = "";
+  placeholder1.textContent = "Select a sign";
+  dom.sign1Select.appendChild(placeholder1);
+
+  const placeholder2 = document.createElement("option");
+  placeholder2.value = "";
+  placeholder2.textContent = "Select a sign";
+  dom.sign2Select.appendChild(placeholder2);
+
   for (const [sign] of state.zodiacSigns) {
     const opt1 = document.createElement("option");
     opt1.value = sign;
