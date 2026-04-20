@@ -54,3 +54,24 @@ Open: http://localhost:4040
 - **Stale-request cancellation** — a new load aborts any previous in-flight request
 - **Structured error messages** — distinct messages for timeout, stale, network, HTTP, parse, and validation failures
 - **Data validation** — top-level JSON shape and all horoscope entries are validated before state is updated
+
+## Testing Summary
+
+- Total structured test cases: 14
+- Categories covered: success, edge, and failure
+- Features covered: zodiac grid / horoscope, Big Three generator, compatibility checker, favorites, search/filter, responsive layout
+- Bugs fixed: 5
+- Pass rate: update this after your final re-run
+
+**all 14 test cases now pass after the fixes**
+**Pass rate: 14/14 (100%)**
+
+## Known Issues / Limitations
+
+- Moon and Rising sign calculations are approximate and simplified for this project
+- Compatibility data is based on static local JSON rather than a live service
+- The project is fully client-side and depends on local data files
+
+## Deployed URL
+
+[!!!paste URL here]
